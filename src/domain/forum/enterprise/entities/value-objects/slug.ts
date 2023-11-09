@@ -1,8 +1,12 @@
 export class Slug {
   public value: string
 
-  constructor(slug: string) {
+  private constructor(slug: string) {
     this.value = slug
+  }
+
+  static create(value: string) {
+    return new Slug(value)
   }
 
   static createFromText(text: string) {
