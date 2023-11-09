@@ -1,5 +1,5 @@
-import { questionFactory } from 'teste/factories/question-factory'
-import { InMemoryQuestionRepository } from 'teste/in-memory-question-repository'
+import { questionFactory } from '@test/factories/question-factory'
+import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
 import { GetQuestionBySlug } from './get-question-by-slug'
 

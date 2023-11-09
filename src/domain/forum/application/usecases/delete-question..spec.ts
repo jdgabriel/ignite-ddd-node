@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { questionFactory } from 'teste/factories/question-factory'
-import { InMemoryQuestionRepository } from 'teste/in-memory-question-repository'
+import { questionFactory } from '@test/factories/question-factory'
+import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
 import { DeleteQuestion } from './delete-question'
 
 let questionRepository: InMemoryQuestionRepository
