@@ -1,11 +1,11 @@
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Answer } from "../entities/answer";
-import { AnswersRepository } from "../repositories/answers-repository";
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Answer } from '../entities/answer'
+import { AnswersRepository } from '../repositories/answers-repository'
 
 interface AQRequest {
-  questionId: string;
-  instructorId: string;
-  content: string;
+  questionId: string
+  instructorId: string
+  content: string
 }
 
 export class AnswerQuestion {
@@ -16,9 +16,9 @@ export class AnswerQuestion {
       authorId: new UniqueEntityID(instructorId),
       questionId: new UniqueEntityID(questionId),
       content,
-    });
-    await this.answersRepository.create(answer);
+    })
+    await this.answersRepository.create(answer)
 
-    return answer;
+    return answer
   }
 }

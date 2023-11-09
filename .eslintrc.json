@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "@rocketseat/eslint-config/node",
+    "plugin:vitest-globals/recommended"
+  ],
+  "env": {
+    "vitest-globals/env": true
+  },
+  "rules": {
+    "no-unused-var":"off",
+    "@typescript-eslint/no-unused-vars":"off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": "off"
+  }
+}
