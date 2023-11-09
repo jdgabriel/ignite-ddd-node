@@ -1,3 +1,4 @@
+import { Question } from '../../enterprise/entities/question'
 import { QuestionRepository } from '../repositories/question-repository'
 
 interface UpdateQuestionRequest {
@@ -5,6 +6,10 @@ interface UpdateQuestionRequest {
   authorId: string
   title: string
   content: string
+}
+
+interface UpdateQuestionResponse {
+  question: Question
 }
 
 export class UpdateQuestion {
@@ -15,7 +20,7 @@ export class UpdateQuestion {
     authorId,
     title,
     content,
-  }: UpdateQuestionRequest): Promise<void> {
+  }: UpdateQuestionRequest): Promise<UpdateQuestionResponse> {
     const question = await this.questionRepository.findById(questionId)
     if (!question) throw new Error('Question not found')
 
@@ -27,5 +32,6 @@ export class UpdateQuestion {
     question.content = content
 
     await this.questionRepository.save(question)
+    return { question }
   }
 }
