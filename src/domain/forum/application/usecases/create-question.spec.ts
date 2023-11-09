@@ -1,14 +1,16 @@
-import { Question } from '../../enterprise/entities/question'
-import { QuestionRepository } from '../repositories/question-repository'
+import { InMemoryQuestionRepository } from 'teste/in-memory-question-repository'
 import { CreateQuestion } from './create-question'
 
-const fakeQuestionRepository: QuestionRepository = {
-  create: async (answer: Question) => {},
-}
+let questionRepository: InMemoryQuestionRepository
+let sut: CreateQuestion
 
-describe('Answer Question', () => {
-  it('should be answer a question', async () => {
-    const sut = new CreateQuestion(fakeQuestionRepository)
+describe('Create Question', () => {
+  beforeEach(() => {
+    questionRepository = new InMemoryQuestionRepository()
+    sut = new CreateQuestion(questionRepository)
+  })
+
+  it('should be able create a question', async () => {
     const { question } = await sut.execute({
       authorId: '1',
       title: 'Question title',
