@@ -1,17 +1,17 @@
 import { QuestionCommentsRepository } from '../repositories/question-comments-repository'
 
-interface DeleteQuestionRequest {
+interface DeleteQuestionCommentRequest {
   authorId: string
   questionCommentId: string
 }
 
-export class DeleteQuestion {
+export class DeleteQuestionComment {
   constructor(private questionRepository: QuestionCommentsRepository) {}
 
   async execute({
     authorId,
     questionCommentId,
-  }: DeleteQuestionRequest): Promise<void> {
+  }: DeleteQuestionCommentRequest): Promise<void> {
     const questionComment =
       await this.questionRepository.findById(questionCommentId)
     if (!questionComment) throw new Error('Question comment not found')
