@@ -1,5 +1,5 @@
 import { Either, left, right } from '@/core/errors/either'
-import { Question } from '../../enterprise/entities/question'
+import { Question } from '../../enterprise/entities/question/question'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { QuestionRepository } from '../repositories/question-repository'
 import { NotAllowedError } from './errors/not-allowed-error'

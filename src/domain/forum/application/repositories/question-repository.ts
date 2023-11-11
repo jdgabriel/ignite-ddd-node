@@ -1,5 +1,5 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
-import { Question } from '../../enterprise/entities/question'
+import { Question } from '../../enterprise/entities/question/question'
 
 export interface QuestionRepository {
   findById(id: string): Promise<Question | null>

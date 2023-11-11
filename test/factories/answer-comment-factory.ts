@@ -4,7 +4,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import {
   AnswerComment,
   AnswerCommentProps,
-} from '@/domain/forum/enterprise/entities/comment/answer-comment'
+} from '@/domain/forum/enterprise/entities/answer/answer-comment'
 
 export function answerCommentFactory(
   override: Partial<AnswerCommentProps> = {},

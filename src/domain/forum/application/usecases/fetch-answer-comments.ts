@@ -1,5 +1,5 @@
 import { Either, right } from '@/core/errors/either'
-import { AnswerComment } from '../../enterprise/entities/comment/answer-comment'
+import { AnswerComment } from '../../enterprise/entities/answer/answer-comment'
 import { AnswersCommentsRepository } from '../repositories/answers-comments-repository'
 
 interface FetchAnswerCommentsRequest {

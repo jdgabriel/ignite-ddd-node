@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Either, right } from '@/core/errors/either'
-import { Answer } from '../../enterprise/entities/answer'
+import { Answer } from '../../enterprise/entities/answer/answer'
 import { AnswersRepository } from '../repositories/answers-repository'
 
 interface AnswerQuestionRequest {
