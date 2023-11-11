@@ -1,3 +1,4 @@
+import { Either, right } from '@/core/errors/either'
 import { QuestionComment } from '../../enterprise/entities/comment/question-comment'
 import { QuestionCommentsRepository } from '../repositories/question-comments-repository'
 
@@ -6,9 +7,12 @@ interface FetchRecentQuestionsRequest {
   page: number
 }
 
-interface FetchRecentQuestionsResponse {
-  questionComments: Array<QuestionComment>
-}
+type FetchRecentQuestionsResponse = Either<
+  null,
+  {
+    questionComments: Array<QuestionComment>
+  }
+>
 
 export class FetchQuestionComments {
   constructor(private questionCommentRepository: QuestionCommentsRepository) {}
@@ -22,6 +26,6 @@ export class FetchQuestionComments {
         page,
       })
 
-    return { questionComments }
+    return right({ questionComments })
   }
 }
