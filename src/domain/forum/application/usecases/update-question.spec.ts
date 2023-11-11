@@ -1,6 +1,7 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { questionFactory } from '@test/factories/question-factory'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
+import { NotAllowedError } from './errors/not-allowed-error'
 import { UpdateQuestion } from './update-question'
 
 let questionRepository: InMemoryQuestionRepository
@@ -43,13 +44,14 @@ describe('Update Question', () => {
     )
     await questionRepository.create(newQuestion)
 
-    expect(() =>
-      sut.execute({
-        questionId: newQuestion.id.value,
-        authorId: 'author-1',
-        title: 'New title question',
-        content: 'New content',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      questionId: newQuestion.id.value,
+      authorId: 'author-1',
+      title: 'New title question',
+      content: 'New content',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

@@ -4,6 +4,7 @@ import { questionFactory } from '@test/factories/question-factory'
 import { InMemoryAnswersRepository } from '@test/in-memory-answers-repository'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
 import { ChooseBestAnswerQuestion } from './choose-question-best-answer'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let questionRepository: InMemoryQuestionRepository
 let answerRepository: InMemoryAnswersRepository
@@ -44,11 +45,12 @@ describe('Delete Answer', () => {
     await questionRepository.create(question)
     await answerRepository.create(answer)
 
-    expect(() =>
-      sut.execute({
-        answerId: answer.id.value,
-        authorId: 'another-author-id',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: answer.id.value,
+      authorId: 'another-author-id',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

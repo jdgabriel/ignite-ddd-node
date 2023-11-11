@@ -2,6 +2,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { answerFactory } from '@test/factories/answer-factory'
 import { InMemoryAnswersRepository } from '@test/in-memory-answers-repository'
 import { DeleteAnswer } from './delete-answer'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let answerRepository: InMemoryAnswersRepository
 let sut: DeleteAnswer
@@ -37,8 +38,12 @@ describe('Delete Answer', () => {
     await answerRepository.create(newAnswer)
     expect(answerRepository.items).toHaveLength(1)
 
-    expect(() =>
-      sut.execute({ answerId: 'answer-1', authorId: 'author-1' }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: 'answer-1',
+      authorId: 'author-1',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

@@ -19,11 +19,13 @@ describe('Fetch Question Answers', () => {
     await answerRepository.create(answerFactory({ questionId: question.id }))
     await answerRepository.create(answerFactory({ questionId: question.id }))
 
-    const { answers } = await sut.execute({
+    const result = await sut.execute({
       questionId: question.id.value,
       page: 1,
     })
-    expect(answers).toHaveLength(3)
+
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.answers).toHaveLength(3)
   })
 
   it('should be able to fetch paginated question answers', async () => {
@@ -32,10 +34,11 @@ describe('Fetch Question Answers', () => {
       await answerRepository.create(answerFactory({ questionId: question.id }))
     }
 
-    const { answers } = await sut.execute({
+    const result = await sut.execute({
       questionId: question.id.value,
       page: 2,
     })
-    expect(answers).toHaveLength(2)
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.answers).toHaveLength(2)
   })
 })

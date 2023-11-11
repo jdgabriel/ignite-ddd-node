@@ -3,6 +3,7 @@ import { answerFactory } from '@test/factories/answer-factory'
 import { InMemoryAnswerCommentRepository } from '@test/in-memory-answer-comment-repository'
 import { InMemoryAnswersRepository } from '@test/in-memory-answers-repository'
 import { CommentOnAnswer } from './comment-on-answer'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let answerRepository: InMemoryAnswersRepository
 let answerCommentRepository: InMemoryAnswerCommentRepository
@@ -19,27 +20,28 @@ describe('Create Answer', () => {
     const answer = answerFactory()
     await answerRepository.create(answer)
 
-    const { answerComment } = await sut.execute({
+    const result = await sut.execute({
       answerId: answer.id.value,
       authorId: 'author-id-1',
       content: 'New comment on answer',
     })
-    expect(answerComment.id).toBeTruthy()
-    expect(answerCommentRepository.items[0].content).toEqual(
-      'New comment on answer',
-    )
+    expect(result.isRight()).toBe(true)
+    expect(answerCommentRepository.items[0]).toMatchObject({
+      content: 'New comment on answer',
+    })
   })
 
   it('should not be able create comment if a answer not exists', async () => {
     const answer = answerFactory()
     await answerRepository.create(answer)
 
-    expect(() =>
-      sut.execute({
-        answerId: 'answer-id-invalid',
-        authorId: 'author-id-1',
-        content: 'New comment on answer',
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: 'answer-id-invalid',
+      authorId: 'author-id-1',
+      content: 'New comment on answer',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
 })

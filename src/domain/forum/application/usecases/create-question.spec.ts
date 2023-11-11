@@ -11,12 +11,12 @@ describe('Create Question', () => {
   })
 
   it('should be able create a question', async () => {
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       authorId: '1',
       title: 'Question title',
       content: 'New question',
     })
-    expect(question.id).toBeTruthy()
-    expect(question.slug.value).toEqual('question-title')
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.question.slug.value).toMatchObject('question-title')
   })
 })
