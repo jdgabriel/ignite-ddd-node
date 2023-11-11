@@ -1,9 +1,14 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
+import { QuestionAttachmentRepository } from '@/domain/forum/application/repositories/question-attachment-repository'
 import { QuestionRepository } from '@/domain/forum/application/repositories/question-repository'
 import { Question } from '@/domain/forum/enterprise/entities/question/question'
 
 export class InMemoryQuestionRepository implements QuestionRepository {
   public items: Array<Question> = []
+
+  constructor(
+    private questionAttachmentRepository: QuestionAttachmentRepository,
+  ) {}
 
   async create(question: Question) {
     this.items.push(question)
@@ -35,6 +40,9 @@ export class InMemoryQuestionRepository implements QuestionRepository {
 
   async delete(question: Question): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id === question.id)
+    await this.questionAttachmentRepository.deleteManyByQuestionId(
+      question.id.value,
+    )
     this.items.splice(itemIndex, 1)
   }
 }
