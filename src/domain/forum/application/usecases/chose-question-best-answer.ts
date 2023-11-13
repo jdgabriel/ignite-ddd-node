@@ -5,19 +5,19 @@ import { Question } from '../../enterprise/entities/question/question'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { QuestionRepository } from '../repositories/question-repository'
 
-interface ChooseBestAnswerQuestionRequest {
+interface ChoseBestAnswerQuestionRequest {
   answerId: string
   authorId: string
 }
 
-type ChooseBestAnswerQuestionResponse = Either<
+type ChoseBestAnswerQuestionResponse = Either<
   ResourceNotFoundError | NotAllowedError,
   {
     question: Question
   }
 >
 
-export class ChooseBestAnswerQuestion {
+export class ChoseBestAnswerQuestion {
   constructor(
     private questionRepository: QuestionRepository,
     private answersRepository: AnswersRepository,
@@ -26,7 +26,7 @@ export class ChooseBestAnswerQuestion {
   async execute({
     answerId,
     authorId,
-  }: ChooseBestAnswerQuestionRequest): Promise<ChooseBestAnswerQuestionResponse> {
+  }: ChoseBestAnswerQuestionRequest): Promise<ChoseBestAnswerQuestionResponse> {
     const answer = await this.answersRepository.findById(answerId)
     if (!answer) {
       return left(new ResourceNotFoundError())

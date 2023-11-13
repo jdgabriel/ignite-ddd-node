@@ -6,13 +6,13 @@ import { InMemoryAnswerAttachmentsRepository } from '@test/in-memory-answer-atta
 import { InMemoryAnswersRepository } from '@test/in-memory-answers-repository'
 import { InMemoryQuestionAttachmentsRepository } from '@test/in-memory-question-attachment-repository'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
-import { ChooseBestAnswerQuestion } from './choose-question-best-answer'
+import { ChoseBestAnswerQuestion } from './chose-question-best-answer'
 
 let questionRepository: InMemoryQuestionRepository
 let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let answerRepository: InMemoryAnswersRepository
 let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
-let sut: ChooseBestAnswerQuestion
+let sut: ChoseBestAnswerQuestion
 
 describe('Delete Answer', () => {
   beforeEach(() => {
@@ -24,10 +24,10 @@ describe('Delete Answer', () => {
     answerRepository = new InMemoryAnswersRepository(
       answerAttachmentsRepository,
     )
-    sut = new ChooseBestAnswerQuestion(questionRepository, answerRepository)
+    sut = new ChoseBestAnswerQuestion(questionRepository, answerRepository)
   })
 
-  it('should be able to choose the question best answer', async () => {
+  it('should be able to chose the question best answer', async () => {
     const question = questionFactory()
     const answer = answerFactory({
       questionId: question.id,
@@ -44,7 +44,7 @@ describe('Delete Answer', () => {
     expect(questionRepository.items[0].bestAnswerId).toEqual(answer.id)
   })
 
-  it('should not be able to choose another user question best answer', async () => {
+  it('should not be able to chose another user question best answer', async () => {
     const question = questionFactory({
       authorId: new UniqueEntityID('author-id'),
     })
