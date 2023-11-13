@@ -7,7 +7,7 @@ import { ReadNotification } from './read-notification'
 let notificationRepository: InMemoryNotificationRepository
 let sut: ReadNotification
 
-describe('Create Notification', () => {
+describe('Read Notification', () => {
   beforeEach(() => {
     notificationRepository = new InMemoryNotificationRepository()
     sut = new ReadNotification(notificationRepository)
