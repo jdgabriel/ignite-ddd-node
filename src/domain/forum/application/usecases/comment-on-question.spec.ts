@@ -1,16 +1,21 @@
 import { questionFactory } from '@test/factories/question-factory'
+import { InMemoryQuestionAttachmentsRepository } from '@test/in-memory-question-attachment-repository'
 import { InMemoryQuestionCommentRepository } from '@test/in-memory-question-comment-repository'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
 import { CommentOnQuestion } from './comment-on-question'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let questionRepository: InMemoryQuestionRepository
+let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let questionCommentRepository: InMemoryQuestionCommentRepository
 let sut: CommentOnQuestion
 
 describe('Create Question', () => {
   beforeEach(() => {
-    questionRepository = new InMemoryQuestionRepository()
+    questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    questionRepository = new InMemoryQuestionRepository(
+      questionAttachmentsRepository,
+    )
     questionCommentRepository = new InMemoryQuestionCommentRepository()
     sut = new CommentOnQuestion(questionRepository, questionCommentRepository)
   })

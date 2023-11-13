@@ -1,19 +1,29 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { answerFactory } from '@test/factories/answer-factory'
 import { questionFactory } from '@test/factories/question-factory'
+import { InMemoryAnswerAttachmentsRepository } from '@test/in-memory-answer-attachment-repository'
 import { InMemoryAnswersRepository } from '@test/in-memory-answers-repository'
+import { InMemoryQuestionAttachmentsRepository } from '@test/in-memory-question-attachment-repository'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
 import { ChooseBestAnswerQuestion } from './choose-question-best-answer'
 import { NotAllowedError } from './errors/not-allowed-error'
 
 let questionRepository: InMemoryQuestionRepository
+let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let answerRepository: InMemoryAnswersRepository
+let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let sut: ChooseBestAnswerQuestion
 
 describe('Delete Answer', () => {
   beforeEach(() => {
-    answerRepository = new InMemoryAnswersRepository()
-    questionRepository = new InMemoryQuestionRepository()
+    questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+    questionRepository = new InMemoryQuestionRepository(
+      questionAttachmentsRepository,
+    )
+    answerRepository = new InMemoryAnswersRepository(
+      answerAttachmentsRepository,
+    )
     sut = new ChooseBestAnswerQuestion(questionRepository, answerRepository)
   })
 

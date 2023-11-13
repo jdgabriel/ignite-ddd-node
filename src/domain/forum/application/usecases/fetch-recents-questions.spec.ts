@@ -1,13 +1,18 @@
 import { questionFactory } from '@test/factories/question-factory'
+import { InMemoryQuestionAttachmentsRepository } from '@test/in-memory-question-attachment-repository'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
 import { FetchRecentQuestions } from './fetch-recents-questions'
 
 let questionRepository: InMemoryQuestionRepository
+let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let sut: FetchRecentQuestions
 
 describe('Fetch Recent Questions', () => {
   beforeEach(() => {
-    questionRepository = new InMemoryQuestionRepository()
+    questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    questionRepository = new InMemoryQuestionRepository(
+      questionAttachmentsRepository,
+    )
     sut = new FetchRecentQuestions(questionRepository)
   })
 

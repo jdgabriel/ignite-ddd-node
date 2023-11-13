@@ -1,16 +1,19 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { answerFactory } from '@test/factories/answer-factory'
+import { InMemoryAnswerAttachmentsRepository } from '@test/in-memory-answer-attachment-repository'
 import { InMemoryAnswersRepository } from '@test/in-memory-answers-repository'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { UpdateAnswer } from './update-answer'
 
 let answerRepository: InMemoryAnswersRepository
+let answerAttachmentRepository: InMemoryAnswerAttachmentsRepository
 let sut: UpdateAnswer
 
 describe('Update Answer', () => {
   beforeEach(() => {
-    answerRepository = new InMemoryAnswersRepository()
-    sut = new UpdateAnswer(answerRepository)
+    answerAttachmentRepository = new InMemoryAnswerAttachmentsRepository()
+    answerRepository = new InMemoryAnswersRepository(answerAttachmentRepository)
+    sut = new UpdateAnswer(answerRepository, answerAttachmentRepository)
   })
 
   it('should be able to update a answer', async () => {
@@ -22,12 +25,14 @@ describe('Update Answer', () => {
     )
     await answerRepository.create(newAnswer)
 
-    await sut.execute({
+    const result = await sut.execute({
       answerId: newAnswer.id.value,
       authorId: 'author-1',
       content: 'New content',
+      attachmentsIds: ['1', '2'],
     })
 
+    expect(result.isRight()).toBe(true)
     expect(answerRepository.items[0]).toMatchObject({
       content: 'New content',
     })
@@ -46,6 +51,7 @@ describe('Update Answer', () => {
       answerId: newAnswer.id.value,
       authorId: 'author-1',
       content: 'New content',
+      attachmentsIds: [],
     })
 
     expect(result.isLeft()).toBe(true)

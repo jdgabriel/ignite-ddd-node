@@ -1,5 +1,9 @@
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Either, left, right } from '@/core/errors/either'
 import { Answer } from '../../enterprise/entities/answer/answer'
+import { AnswerAttachment } from '../../enterprise/entities/answer/answer-attachment'
+import { AnswerAttachmentList } from '../../enterprise/entities/answer/answer-attachment-list'
+import { AnswerAttachmentRepository } from '../repositories/answer-attachment-repository'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
@@ -8,6 +12,7 @@ interface UpdateAnswerRequest {
   answerId: string
   authorId: string
   content: string
+  attachmentsIds: Array<string>
 }
 
 type UpdateAnswerResponse = Either<
@@ -18,12 +23,16 @@ type UpdateAnswerResponse = Either<
 >
 
 export class UpdateAnswer {
-  constructor(private answerRepository: AnswersRepository) {}
+  constructor(
+    private answerRepository: AnswersRepository,
+    private answerAttachmentRepository: AnswerAttachmentRepository,
+  ) {}
 
   async execute({
     answerId,
     authorId,
     content,
+    attachmentsIds,
   }: UpdateAnswerRequest): Promise<UpdateAnswerResponse> {
     const answer = await this.answerRepository.findById(answerId)
     if (!answer) {
@@ -34,7 +43,24 @@ export class UpdateAnswer {
       return left(new NotAllowedError())
     }
 
+    const currentAnswerAttachments =
+      await this.answerAttachmentRepository.findManyByAnswerId(answer.id.value)
+
+    const answerAttachmentList = new AnswerAttachmentList(
+      currentAnswerAttachments,
+    )
+
+    const answerAttachments = attachmentsIds.map((id) =>
+      AnswerAttachment.create({
+        attachmentId: new UniqueEntityID(id),
+        answerId: answer.id,
+      }),
+    )
+
+    answerAttachmentList.update(answerAttachments)
+
     answer.content = content
+    answer.attachments = answerAttachmentList
 
     await this.answerRepository.save(answer)
     return right({ answer })

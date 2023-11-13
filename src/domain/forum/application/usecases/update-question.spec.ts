@@ -12,8 +12,10 @@ let sut: UpdateQuestion
 
 describe('Update Question', () => {
   beforeEach(() => {
-    questionRepository = new InMemoryQuestionRepository()
     questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    questionRepository = new InMemoryQuestionRepository(
+      questionAttachmentsRepository,
+    )
     sut = new UpdateQuestion(questionRepository, questionAttachmentsRepository)
   })
 
