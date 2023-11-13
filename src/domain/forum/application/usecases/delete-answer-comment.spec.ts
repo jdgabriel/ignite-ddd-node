@@ -1,8 +1,8 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { answerCommentFactory } from '@test/factories/answer-comment-factory'
 import { InMemoryAnswerCommentRepository } from '@test/in-memory-answer-comment-repository'
 import { DeleteAnswerComment } from './delete-answer-comment'
-import { NotAllowedError } from './errors/not-allowed-error'
 
 let answerCommentRepository: InMemoryAnswerCommentRepository
 let sut: DeleteAnswerComment

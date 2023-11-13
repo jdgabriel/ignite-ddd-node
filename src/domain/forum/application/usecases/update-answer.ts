@@ -1,12 +1,12 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Either, left, right } from '@/core/errors/either'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { Answer } from '../../enterprise/entities/answer/answer'
 import { AnswerAttachment } from '../../enterprise/entities/answer/answer-attachment'
 import { AnswerAttachmentList } from '../../enterprise/entities/answer/answer-attachment-list'
 import { AnswerAttachmentRepository } from '../repositories/answer-attachment-repository'
 import { AnswersRepository } from '../repositories/answers-repository'
-import { NotAllowedError } from './errors/not-allowed-error'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface UpdateAnswerRequest {
   answerId: string

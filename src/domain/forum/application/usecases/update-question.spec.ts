@@ -1,9 +1,9 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { NotAllowedError } from '@/core/errors/not-allowed-error'
 import { questionAttachmentFactory } from '@test/factories/question-attachment-factory'
 import { questionFactory } from '@test/factories/question-factory'
 import { InMemoryQuestionAttachmentsRepository } from '@test/in-memory-question-attachment-repository'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
-import { NotAllowedError } from './errors/not-allowed-error'
 import { UpdateQuestion } from './update-question'
 
 let questionRepository: InMemoryQuestionRepository

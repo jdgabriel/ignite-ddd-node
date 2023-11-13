@@ -1,8 +1,8 @@
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { questionFactory } from '@test/factories/question-factory'
 import { InMemoryQuestionAttachmentsRepository } from '@test/in-memory-question-attachment-repository'
 import { InMemoryQuestionRepository } from '@test/in-memory-question-repository'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { GetQuestionBySlug } from './get-question-by-slug'
 
 let questionRepository: InMemoryQuestionRepository

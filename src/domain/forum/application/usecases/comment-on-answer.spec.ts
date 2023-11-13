@@ -1,9 +1,9 @@
 import { answerFactory } from '@test/factories/answer-factory'
 
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { InMemoryAnswerCommentRepository } from '@test/in-memory-answer-comment-repository'
 import { InMemoryAnswersRepository } from '@test/in-memory-answers-repository'
 import { CommentOnAnswer } from './comment-on-answer'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let answerRepository: InMemoryAnswersRepository
 let answerCommentRepository: InMemoryAnswerCommentRepository
