@@ -10,6 +10,7 @@
     "no-useless-constructor": "off",
     "no-unused-var":"off",
     "no-empty-function": "off",
+    "no-new": "off",
     "@typescript-eslint/no-unused-vars":"off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-explicit-any": "off"
